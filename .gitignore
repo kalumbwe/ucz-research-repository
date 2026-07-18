@@ -1,0 +1,4 @@
+uploads/reports/*
+uploads/covers/*
+!uploads/reports/.gitkeep
+!uploads/covers/.gitkeep

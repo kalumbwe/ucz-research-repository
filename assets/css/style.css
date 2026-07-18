@@ -1,0 +1,124 @@
+:root {
+  --ucz-maroon: #5c1a2e;
+  --ucz-maroon-dark: #3f0f1f;
+  --ucz-gold: #d4a017;
+  --ucz-cream: #faf6f0;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  background-color: var(--ucz-cream);
+  color: #2b2b2b;
+}
+
+h1, h2, h3, h4, h5, .brand-font {
+  font-family: 'Merriweather', serif;
+}
+
+.ucz-navbar {
+  background: linear-gradient(90deg, var(--ucz-maroon) 0%, var(--ucz-maroon-dark) 100%);
+}
+
+.ucz-navbar .navbar-brand {
+  font-family: 'Merriweather', serif;
+  font-weight: 700;
+}
+
+.ucz-navbar .nav-link {
+  color: #f1e6d8 !important;
+}
+
+.ucz-navbar .dropdown-menu {
+  background-color: var(--ucz-maroon-dark);
+}
+.ucz-navbar .dropdown-item {
+  color: #f1e6d8;
+}
+.ucz-navbar .dropdown-item:hover {
+  background-color: var(--ucz-maroon);
+  color: #fff;
+}
+
+.hero-banner {
+  background: linear-gradient(135deg, var(--ucz-maroon) 0%, var(--ucz-maroon-dark) 100%);
+  color: #fff;
+  padding: 4.5rem 0 3.5rem;
+}
+
+.hero-banner h1 {
+  font-weight: 700;
+}
+
+.hero-search {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.stat-card {
+  border: none;
+  border-left: 4px solid var(--ucz-gold);
+  border-radius: .5rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+
+.report-card {
+  border: none;
+  border-radius: .6rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+  transition: transform .15s ease, box-shadow .15s ease;
+  height: 100%;
+}
+.report-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0,0,0,.1);
+}
+
+.report-card .badge-dept {
+  background-color: var(--ucz-maroon);
+}
+
+.report-card .badge-degree {
+  background-color: var(--ucz-gold);
+  color: #2b2b2b;
+}
+
+.report-icon {
+  color: var(--ucz-maroon);
+}
+
+.btn-ucz {
+  background-color: var(--ucz-maroon);
+  border-color: var(--ucz-maroon);
+  color: #fff;
+}
+.btn-ucz:hover {
+  background-color: var(--ucz-maroon-dark);
+  border-color: var(--ucz-maroon-dark);
+  color: #fff;
+}
+
+.ucz-footer {
+  background-color: var(--ucz-maroon-dark);
+}
+.footer-link {
+  color: #d8c4b0;
+  text-decoration: none;
+}
+.footer-link:hover {
+  color: var(--ucz-gold);
+}
+
+.department-pill {
+  border: 1px solid var(--ucz-maroon);
+  color: var(--ucz-maroon);
+  border-radius: 20px;
+  padding: .3rem .9rem;
+  display: inline-block;
+  font-size: .85rem;
+  margin: .2rem;
+  text-decoration: none;
+}
+.department-pill:hover {
+  background-color: var(--ucz-maroon);
+  color: #fff;
+}

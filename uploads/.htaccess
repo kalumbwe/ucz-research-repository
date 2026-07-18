@@ -1,0 +1,7 @@
+# Prevent execution of any script files inside the uploads directory.
+# Only static files (PDFs, images) should ever be served from here.
+<FilesMatch "\.(php|php3|php4|php5|phtml|pl|py|jsp|asp|sh|cgi)$">
+    Require all denied
+</FilesMatch>
+
+Options -Indexes
