@@ -1,9 +1,8 @@
 # Use official PHP image with Apache
 FROM php:8.1-apache
 
-# Install OpenSSL development libraries and configure PDO MySQL with SSL support
+# Install OpenSSL development libraries and the PDO MySQL extension
 RUN apt-get update && apt-get install -y libssl-dev \
-    && docker-php-ext-configure pdo_mysql --with-openssl \
     && docker-php-ext-install pdo pdo_mysql
 
 # Enable Apache mod_rewrite for pretty URLs
