@@ -17,7 +17,7 @@
       <div>
         <h5>United Church of Zambia University</h5>
         <ul>
-          <li><span class="mono" style="font-size:.85rem">Lusaka, Zambia</span></li>
+          <li><span class="mono" style="font-size:.85rem">Kitwe, Zambia</span></li>
           <li><span class="mono" style="font-size:.85rem">"Knowledge for Service and Fullness of Life"</span></li>
         </ul>
       </div>
