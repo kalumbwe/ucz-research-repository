@@ -1,0 +1,61 @@
+/* ==================================================================
+   UCZ brand skin for AdminLTE 3 — navy + brass gold, matching the
+   public site identity. Loaded after adminlte.min.css.
+   ================================================================== */
+:root{
+  --ucz-ink:#14213D;
+  --ucz-ink-2:#1c2c52;
+  --ucz-gold:#B8892B;
+  --ucz-gold-dark:#8f6b1e;
+}
+
+body, .content-wrapper{background:#F1F2F5}
+
+/* Sidebar */
+.main-sidebar{background:var(--ucz-ink)!important}
+.brand-link{border-bottom:1px solid rgba(255,255,255,.12);background:var(--ucz-ink-2)}
+.brand-text{font-family:'Fraunces',serif;color:#fff!important}
+.brand-text b{color:var(--ucz-gold)}
+.user-panel{border-bottom:1px solid rgba(255,255,255,.12)}
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active{background:var(--ucz-gold);color:var(--ucz-ink);font-weight:600}
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link:hover{background:rgba(184,137,43,.18)}
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active .nav-icon{color:var(--ucz-ink)}
+
+/* Top navbar */
+.main-header.navbar{border-bottom:3px solid var(--ucz-gold)}
+
+/* Buttons */
+.btn-primary{background-color:var(--ucz-ink);border-color:var(--ucz-ink)}
+.btn-primary:hover,.btn-primary:focus{background-color:var(--ucz-ink-2);border-color:var(--ucz-ink-2)}
+.btn-outline-primary{color:var(--ucz-ink);border-color:var(--ucz-ink)}
+.btn-outline-primary:hover{background-color:var(--ucz-ink);border-color:var(--ucz-ink)}
+.btn-warning{background-color:var(--ucz-gold);border-color:var(--ucz-gold);color:#fff}
+.btn-warning:hover{background-color:var(--ucz-gold-dark);border-color:var(--ucz-gold-dark);color:#fff}
+
+/* Cards & small stat boxes */
+.card.card-primary:not(.card-outline)>.card-header{background-color:var(--ucz-ink)}
+.card-outline.card-primary{border-top-color:var(--ucz-ink)}
+.small-box.bg-ink{background-color:var(--ucz-ink)!important;color:#fff}
+.small-box.bg-gold{background-color:var(--ucz-gold)!important;color:#fff}
+.small-box .icon{opacity:.25}
+
+/* Badges */
+.badge-warning{background-color:var(--ucz-gold)}
+
+/* Login / register page */
+.login-page{background:linear-gradient(180deg,var(--ucz-ink) 0%,#0d1730 100%)}
+.login-box{width:400px}
+.login-logo{color:#fff;font-family:'Fraunces',serif;margin-bottom:1.2rem}
+.login-logo b{color:var(--ucz-gold)}
+.login-logo small{display:block;font-family:'Inter',sans-serif;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:#b9c2d6;margin-top:4px}
+.login-box .card{border-top:3px solid var(--ucz-gold);border-radius:4px}
+.login-card-body{border-radius:0 0 4px 4px}
+.login-box .btn-primary{background-color:var(--ucz-ink);border-color:var(--ucz-ink)}
+
+/* Tables */
+.table thead th{background:#F7F8F9;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:#5b6472}
+.table td{vertical-align:middle}
+
+/* Misc */
+.text-ink{color:var(--ucz-ink)}
+.accession-code{font-family:monospace;font-size:.78rem;color:#5b6472}

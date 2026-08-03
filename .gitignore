@@ -1,0 +1,17 @@
+# Environment
+.env
+
+# Uploaded PDFs — never commit real report files; the folder itself
+# should exist, tracked via storage/uploads/.gitkeep
+/storage/uploads/*
+!/storage/uploads/.gitkeep
+/storage/installed.lock
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log

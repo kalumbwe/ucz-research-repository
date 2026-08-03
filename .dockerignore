@@ -1,0 +1,6 @@
+.git
+.gitignore
+.env
+storage/uploads/*
+!storage/uploads/.gitkeep
+README.md
