@@ -92,6 +92,11 @@ function nav_active(string $key, string $active): string
               <i class="nav-icon fas fa-user-shield"></i><p>Admin Users</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="/admin/settings.php" class="nav-link <?= nav_active('settings', $activeMenu) ?>">
+              <i class="nav-icon fas fa-sliders-h"></i><p>Site Settings</p>
+            </a>
+          </li>
           <?php endif; ?>
           <li class="nav-item">
             <a href="/admin/profile.php" class="nav-link <?= nav_active('profile', $activeMenu) ?>">

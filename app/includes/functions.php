@@ -165,6 +165,83 @@ function all_categories(): array
     return $rows;
 }
 
+/** Default site settings — used to seed the table and as a fallback if a key is ever missing. */
+function default_settings(): array
+{
+    return [
+        'hero_eyebrow'    => 'Est. digital archive · United Church of Zambia University',
+        'hero_tagline'    => 'Knowledge for Service, catalogued for discovery.',
+        'hero_subtext'    => 'The official repository of research reports, theses, dissertations and scholarly papers produced across every school of the University. Search the record, read the abstract, download the PDF.',
+        'footer_about'    => 'The digital archive of research reports, theses and scholarly work produced across the United Church of Zambia University community.',
+        'footer_tagline'  => 'Knowledge for Service and Fullness of Life',
+        'contact_address' => 'Lusaka, Zambia',
+        'contact_email'   => '',
+        'contact_phone'   => '',
+    ];
+}
+
+/**
+ * All site settings as [key => value], cached for the request.
+ * Self-provisions the site_settings table and seeds defaults on first
+ * call — safe to run against an already-live database with no
+ * separate migration step.
+ */
+function all_settings(): array
+{
+    static $cache = null;
+    if ($cache !== null) {
+        return $cache;
+    }
+
+    $pdo = db();
+    $pdo->exec("CREATE TABLE IF NOT EXISTS site_settings (
+        setting_key   VARCHAR(100) PRIMARY KEY,
+        setting_value TEXT NOT NULL DEFAULT '',
+        updated_at    TIMESTAMP NOT NULL DEFAULT NOW()
+    )");
+
+    $existing = [];
+    foreach ($pdo->query('SELECT setting_key, setting_value FROM site_settings')->fetchAll() as $row) {
+        $existing[$row['setting_key']] = $row['setting_value'];
+    }
+
+    $defaults = default_settings();
+    $missing = array_diff_key($defaults, $existing);
+    if (!empty($missing)) {
+        $stmt = $pdo->prepare('INSERT INTO site_settings (setting_key, setting_value) VALUES (?, ?) ON CONFLICT (setting_key) DO NOTHING');
+        foreach ($missing as $k => $v) {
+            $stmt->execute([$k, $v]);
+        }
+        $existing += $missing;
+    }
+
+    $cache = $existing + $defaults;
+    return $cache;
+}
+
+/** Shorthand accessor for a single site setting. */
+function setting(string $key, string $default = ''): string
+{
+    $all = all_settings();
+    return $all[$key] !== '' ? $all[$key] : $default;
+}
+
+/** Saves one or more settings (key => value). Unknown keys are ignored. */
+function save_settings(array $values): void
+{
+    $allowed = array_keys(default_settings());
+    $pdo = db();
+    $stmt = $pdo->prepare(
+        'INSERT INTO site_settings (setting_key, setting_value, updated_at) VALUES (?, ?, NOW())
+         ON CONFLICT (setting_key) DO UPDATE SET setting_value = EXCLUDED.setting_value, updated_at = NOW()'
+    );
+    foreach ($values as $key => $value) {
+        if (in_array($key, $allowed, true)) {
+            $stmt->execute([$key, trim($value)]);
+        }
+    }
+}
+
 /**
  * Validates and moves an uploaded PDF from $_FILES[$field] into
  * STORAGE_PATH under a random, collision-proof name.

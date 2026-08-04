@@ -37,9 +37,9 @@ require __DIR__ . '/../app/includes/header_public.php';
 <section class="hero">
   <div class="container">
     <div class="hero-inner">
-      <span class="eyebrow">Est. digital archive &middot; United Church of Zambia University</span>
-      <h1>Knowledge for Service, catalogued for discovery.</h1>
-      <p class="lede">The official repository of research reports, theses, dissertations and scholarly papers produced across every school of the University. Search the record, read the abstract, download the PDF.</p>
+      <span class="eyebrow"><?= e(setting('hero_eyebrow')) ?></span>
+      <h1><?= e(setting('hero_tagline')) ?></h1>
+      <p class="lede"><?= e(setting('hero_subtext')) ?></p>
     </div>
 
     <div class="search-panel">

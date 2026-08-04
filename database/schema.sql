@@ -53,6 +53,12 @@ CREATE TABLE IF NOT EXISTS reports (
     updated_at          TIMESTAMP     NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE IF NOT EXISTS site_settings (
+    setting_key     VARCHAR(100)  PRIMARY KEY,
+    setting_value   TEXT          NOT NULL DEFAULT '',
+    updated_at      TIMESTAMP     NOT NULL DEFAULT NOW()
+);
+
 CREATE INDEX IF NOT EXISTS idx_reports_department ON reports(department_id);
 CREATE INDEX IF NOT EXISTS idx_reports_category   ON reports(category_id);
 CREATE INDEX IF NOT EXISTS idx_reports_year        ON reports(publication_year);
@@ -80,3 +86,14 @@ INSERT INTO categories (name, slug) VALUES
     ('Book Chapter',                'book-chapter'),
     ('Working Paper / Technical Report', 'working-paper-technical-report')
 ON CONFLICT (slug) DO NOTHING;
+
+INSERT INTO site_settings (setting_key, setting_value) VALUES
+    ('hero_eyebrow',    'Est. digital archive · United Church of Zambia University'),
+    ('hero_tagline',    'Knowledge for Service, catalogued for discovery.'),
+    ('hero_subtext',    'The official repository of research reports, theses, dissertations and scholarly papers produced across every school of the University. Search the record, read the abstract, download the PDF.'),
+    ('footer_about',    'The digital archive of research reports, theses and scholarly work produced across the United Church of Zambia University community.'),
+    ('footer_tagline',  'Knowledge for Service and Fullness of Life'),
+    ('contact_address', 'Lusaka, Zambia'),
+    ('contact_email',   ''),
+    ('contact_phone',   '')
+ON CONFLICT (setting_key) DO NOTHING;
