@@ -66,35 +66,56 @@ in `.env`, and create your first admin account. That single step applies
 Create a new GitHub repository and push this entire folder to it. Render
 deploys straight from your Git repo.
 
-### 2. Create the Blueprint on Render
+### 2. Create the Postgres database
+
+Render's Blueprint does **not** create the database — it is owned through
+the dashboard so that re-applying the blueprint can never provision a
+duplicate or repoint a live service at the wrong instance.
+
+1. In the Render dashboard: **New → Postgres**.
+2. Choose a **paid instance type**. Free Postgres instances expire 30 days
+   after creation and are deleted (with all their data) after a 14-day
+   grace period, and they support no backups — see "Troubleshooting the
+   database connection" below.
+3. Pick the **same region** you will deploy the web service to
+   (`frankfurt` in `render.yaml`). Render's internal `dpg-*` hostnames do
+   not resolve across regions.
+4. Once created, copy its **Internal Database URL** — you will paste it in
+   the next step.
+
+### 3. Create the Blueprint on Render
 
 1. In the Render dashboard: **New → Blueprint**.
 2. Connect the GitHub repo you just created. Render will detect
    `render.yaml` automatically and show you what it's about to create:
-   - a **Postgres database** (`ucz-research-db`, Starter plan)
    - a **Docker web service** (`ucz-research-repository`, Starter plan)
      built from the included `Dockerfile`
    - a **5 GB persistent disk** mounted at
      `/var/www/html/storage/uploads`, so uploaded PDFs survive future
      deploys
-3. Click **Apply**. Render provisions the database, builds the Docker
-   image, and deploys the service. The first build takes a few minutes.
-4. Once it's live, open your service in the Render dashboard → **Environment**
-   and set `APP_URL` to your Render URL (e.g. `https://ucz-research-repository.onrender.com`),
-   or your custom domain once you've attached one.
+3. Render prompts for the values marked `sync: false`. Provide:
+   - `DATABASE_URL` — the Internal Database URL from step 2
+   - `APP_URL` — your Render URL (e.g.
+     `https://ucz-research-repository.onrender.com`), or your custom
+     domain once you've attached one
+   - `INSTALL_KEY` — a long random string, e.g. `openssl rand -hex 32`
+4. Click **Apply**. Render builds the Docker image and deploys the
+   service. The first build takes a few minutes.
 
-Render also auto-generated a random `INSTALL_KEY` for you as part of the
-Blueprint — find it under your web service's **Environment** tab.
-
-### 3. Run the install wizard
+### 4. Run the install wizard
 
 Visit `https://<your-service>.onrender.com/install.php`, paste in the
-`INSTALL_KEY` from step 4 above, and fill in your name/email/password.
+`INSTALL_KEY` you set in step 3, and fill in your name/email/password.
 This applies the database schema (tables + starter schools/categories) and
 creates your first `super_admin` account. The installer locks itself
 after one successful run.
 
-### 4. Log in and start uploading
+Once that succeeds, delete the `INSTALL_KEY` variable in the dashboard.
+The installer refuses to run when it is unset, and the lock file lives in
+the container's ephemeral filesystem — so it is cleared by every deploy
+and the environment variable is the only durable guard.
+
+### 5. Log in and start uploading
 
 Go to `/admin/login.php`, sign in, and upload your first report from
 **Research Reports → Upload New Report**. From **Admin Users** (visible to
