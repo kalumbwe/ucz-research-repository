@@ -130,6 +130,30 @@ super admins) you can invite colleagues with either role.
 | `MAX_UPLOAD_MB` | Max PDF upload size |
 | `INSTALL_KEY` | One-time secret required to run `/install.php` |
 
+## Troubleshooting the database connection
+
+If the site shows **"Database connection failed"**, the app could not open a
+PostgreSQL connection. Two ways to see the real reason:
+
+1. **Render logs** — the underlying driver error is always written to the
+   service log, prefixed with `[db] connection failed`, together with the
+   host/port/database/user actually in use (never the password).
+2. **Health endpoint** — visit
+   `https://<your-service>.onrender.com/healthz.php?db=1&key=<INSTALL_KEY>`.
+   It reports `db: ok` or `db: fail`, and with the correct `INSTALL_KEY` it
+   also prints the connection settings and the driver error. Without `?db=1`
+   the endpoint stays a plain `OK` liveness probe for Render's health check.
+
+Common causes:
+
+| Error contains | Cause | Fix |
+|---|---|---|
+| `could not translate host name` | `DATABASE_URL` points at a database that no longer exists (a free Render database is deleted when its trial period ends) | Create a new Postgres instance, update `DATABASE_URL`, then re-run `/install.php` |
+| `Connection refused` or a timeout | Database suspended, still provisioning, or in a different region than the web service | Check the database's status in the Render dashboard; keep both in the same region |
+| `password authentication failed` | Stale credentials — the URL was copied before the database was recreated | Copy the current **Internal Database URL** into `DATABASE_URL` |
+| `no pg_hba.conf entry` / SSL required | Using the **External** database URL without SSL | Prefer the Internal URL, or set `DB_SSLMODE=require` |
+| `dbname=(empty)` in the log | `DATABASE_URL` is unset or malformed | Re-link it in the dashboard (Blueprint services get it via `fromDatabase`) |
+
 ## Security notes
 
 - Change or remove `INSTALL_KEY` after installing — the installer refuses
